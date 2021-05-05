@@ -2,7 +2,6 @@ import unittest
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from contact import Contact
 from group import Group
 
 
@@ -27,13 +26,6 @@ class TestAddGroup(unittest.TestCase):
         self.open_groups_page(wd)
         self.create_group(wd, Group(name="", header="", footer=""))
         self.open_groups_page(wd)
-        self.logout(wd)
-
-    def test_add_contact(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.add_new_contact(wd, Contact(first_name="dfbdfb", middle_name="dfbdfb"))
         self.logout(wd)
 
     def logout(self, wd):
@@ -63,12 +55,6 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-
-    def add_new_contact(self, wd, contact):
-        wd.find_element_by_xpath("//*[@id='nav']//a[text()='add new']").click()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("middlename").send_keys(contact.middle_name)
-        wd.find_element_by_name("submit").click()
 
     def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
