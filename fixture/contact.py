@@ -8,7 +8,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//*[@id='nav']//a[text()='add new']").click()
         self.filing_in_the_fields(contact)
         wd.find_element_by_name("submit").click()
-        wd.find_element_by_xpath("//*[@id='nav']//a[text()='home']").click()
+        self.open_contact_page()
 
     def filing_in_the_fields(self, contact):
         self.change_field_value("firstname", contact.first_name)
@@ -35,3 +35,8 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
+
+    def open_contact_page(self):
+        wd = self.app.wd
+        if not wd.current_url.endswith("addressbook/"):
+            wd.find_element_by_link_text("home").click()
