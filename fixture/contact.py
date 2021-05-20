@@ -19,18 +19,28 @@ class ContactHelper:
         self.change_field_value("firstname", contact.first_name)
         self.change_field_value("middlename", contact.middle_name)
 
-    def delete_first(self):
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_contact_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//*[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
-    def modify_first(self, contact):
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def modify_first_contact(self, contact):
+        self.modify_contact_by_index(0, contact)
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.open_contact_page()
-        wd.find_element_by_xpath("//*[@title='Edit']").click()
+        wd.find_elements_by_xpath("//*[@title='Edit']")[index].click()
         self.filing_in_the_fields(contact)
         wd.find_element_by_name("update").click()
         self.contact_cache = None
