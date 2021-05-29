@@ -126,3 +126,22 @@ class ContactHelper:
         secondary_phone = re.search("P: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone,
                        secondary_phone=secondary_phone)
+
+
+def clear(s):
+    return re.sub("[() -]", "", s)
+
+
+def merge_phones_like_from_on_home_page(contact):
+    return "\n".join(filter(lambda x: x != "",
+                            map(lambda x: clear(x),
+                                filter(lambda x: x is not None,
+                                       [contact.home_phone, contact.mobile_phone, contact.work_phone,
+                                        contact.secondary_phone]))))
+
+
+def merge_emails_like_from_on_home_page(contact):
+    return "\n".join(filter(lambda x: x != "",
+                            map(lambda x: clear(x),
+                                filter(lambda x: x is not None,
+                                       [contact.email, contact.email2, contact.email3]))))
