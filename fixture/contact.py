@@ -19,7 +19,7 @@ class ContactHelper:
 
     def filing_in_the_fields(self, contact):
         self.change_field_value("firstname", contact.first_name)
-        self.change_field_value("middlename", contact.middle_name)
+        self.change_field_value("lastname", contact.last_name)
 
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
