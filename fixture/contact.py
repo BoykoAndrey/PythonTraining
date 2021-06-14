@@ -127,6 +127,32 @@ class ContactHelper:
         return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone,
                        secondary_phone=secondary_phone)
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//*[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        wd.find_element_by_css_selector("input[id='%s']" % id).click()
+
+    def modify_contact_by_id(self, contact, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.open_edit_contact_by_id(id)
+        self.filing_in_the_fields(contact)
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
+    def open_edit_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        wd.find_element_by_xpath("//*[@id='%s']/../..//*[@title='Edit']" % id).click()
+
 
 def clear(s):
     return re.sub("[() -]", "", s)
