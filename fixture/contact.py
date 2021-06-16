@@ -133,6 +133,7 @@ class ContactHelper:
         self.select_contact_by_id(id)
         wd.find_element_by_xpath("//*[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.open_contact_page()
         self.contact_cache = None
 
     def select_contact_by_id(self, id):

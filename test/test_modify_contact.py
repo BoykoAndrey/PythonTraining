@@ -10,8 +10,8 @@ def test_modify_some_contact(app, db, check_ui):
     old_contact = random.choice(old_contacts)
     contact = Contact("123", "123")
     app.contact.modify_contact_by_id(contact, old_contact.id)
-    assert len(old_contacts) == app.contact.count()
     new_contacts = db.get_contacts_list()
+    assert len(old_contacts) == len(new_contacts)
     assert old_contacts == new_contacts
     if check_ui:
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
