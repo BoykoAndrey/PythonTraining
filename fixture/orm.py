@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from pony.orm import *
-from pymysql.converters import decoders
 
 from model.contact import Contact
 from model.group import Group
@@ -29,7 +28,7 @@ class ORMFixture:
                      lazy=True)
 
     def __init__(self, host, name, user, password):
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        self.db.bind('mysql', host=host, database=name, user=user, password=password)
         self.db.generate_mapping()
 
     def convert_groups_to_model(self, groups):

@@ -1,5 +1,7 @@
 import re
 
+from selenium.webdriver.support.select import Select
+
 from model.contact import Contact
 
 
@@ -153,6 +155,31 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_page()
         wd.find_element_by_xpath("//*[@id='%s']/../..//*[@title='Edit']" % id).click()
+
+    def select_current_group(self, group):
+        wd = self.app.wd
+        self.open_contact_page()
+        select = Select(wd.find_element_by_name('group'))
+        select.select_by_value(group.id)
+
+    def add_contact_to_group(self, contact, group):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(contact.id)
+        select = Select(wd.find_element_by_name('to_group'))
+        select.select_by_value(group.id)
+        wd.find_element_by_name("add").click()
+        self.open_contact_page()
+        self.contact_cache = None
+
+    def delete_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_current_group(group=group)
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_name("remove").click()
+        self.open_contact_page()
+        self.contact_cache = None
 
 
 def clear(s):
