@@ -5,9 +5,8 @@ from model.group import Group
 
 
 def test_add_contact_in_group(app, db, db_orm, check_ui):
-    if len(db.get_contacts_list()) == 0:
+    if len(db.get_contacts_list()) == len(db.get_groups_with_contacts()):
         app.contact.add(Contact(first_name="contact"))
-    if len(db.get_group_list()) == 0:
         app.group.create(Group(name="group"))
     groups = db.get_group_list()
     group = random.choice(groups)
